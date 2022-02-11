@@ -1,31 +1,26 @@
-// Api key
-const API_KEY = 'afa7b9c93ff71996ee531bd54ee3bd1c46064268';
-// const password = 'myapiforthis';
-// Basic structure 
-const basicStructure = 'https://zenquotes.io/api/[mode]/[key]?option1=value&option2=value';
-const api_url =`https://zenquotes.io/api/quotes/`;
-// Fetch Request
-const getAPI = async (url) => {
-  await fetch(api_url, {mode: 'no-cors'})
-        .then(Response => {
-          Response.json().then(response => console.log(response))
-        })
-        
-  
-}
+// Try to get random quote
 
-// const api_url ="https://zenquotes.io/api/quotes/";
-// let myData = 1;
-// async function getapi(url)
-// {
-//   const response = await fetch(url, {mode:'no-cors'});
-//   // var data = await response.json();
-//   // console.log(data);
-//   myData = response;
-//   console.log(myData);
-// }
+let myResult1;
 
-const myData = getAPI(api_url);
-console.log(myData);
+// Api URL
+const apiURL = 'https://goquotes-api.herokuapp.com/api/v1/random?count=1';
 
+const getQuote = () => {
+	const promiseOfQuote = fetch(apiURL);
+	return promiseOfQuote.then(data => data.json());
+};
 
+// Get Click Button
+
+const btn = document.querySelector(".btn");
+btn.addEventListener("click", (event) => {
+	let myQuote;
+	const dataOfQuote = getQuote();
+	dataOfQuote.then(data => {
+		const quotesText = document.querySelector(".quotes-text");
+		const authorText = document.querySelector(".author");
+		authorText.textContent = data.quotes[0].author;
+		quotesText.textContent = data.quotes[0].text;
+		console.log(data);
+	})
+});
